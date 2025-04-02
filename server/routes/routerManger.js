@@ -12,7 +12,7 @@ manageRouter.use("/admin",adminRouter)
 manageRouter.use("/product",productRouter)
 manageRouter.use("/cart",cartRouter)
 manageRouter.use("/order",orderrouter)
-// manageRouter.use("/review",reviewRouter)
+manageRouter.use("/review",reviewRouter)
 
 
 module.exports = manageRouter
