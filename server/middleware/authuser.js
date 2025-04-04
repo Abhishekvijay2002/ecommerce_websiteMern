@@ -18,7 +18,7 @@ const authuser = (req, res, next) => {
             return res.status(403).json({ msg: "Access denied. Admin verification failed" });
         }
 
-        req.userId = verifyToken.id; // Ensure `req.userId` is set correctly.
+        req.userId = verifyToken.id; 
         next();
     } catch (error) {
         res.status(error.status || 500).json({ msg: error.message || "Internal server error" });

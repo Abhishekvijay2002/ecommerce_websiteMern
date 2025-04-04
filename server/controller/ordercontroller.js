@@ -31,7 +31,8 @@ const addOrder = async (req, res) => {
 
         res.status(201).json({ message: "Order placed successfully", order });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.log(error)
+      res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 
@@ -40,7 +41,8 @@ const getOrders = async (req, res) => {
         const orders = await Order.find({ userId: req.userId }).sort({ createdAt: -1 });
         res.json(orders);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.log(error)
+        res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 // const getAllOrders = async (req, res) => {
@@ -64,7 +66,8 @@ const updateOrder = async (req, res) => {
 
         res.status(200).json({ message: 'Order updated successfully', order: updatedOrder });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update order', details: error.message });
+        console.log(error)
+      res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 const cancelOrder = async (req, res) =>  { 
@@ -82,7 +85,8 @@ const cancelOrder = async (req, res) =>  {
             await order.save();
             res.status(200).json({ message: "Order cancelled successfully", order });
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            console.log(error)
+            res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
         }
     };
     

@@ -9,7 +9,8 @@ const createReview = async (req, res) => {
         await review.save();
         res.status(201).json({ success: true, message: "Review added successfully", review });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error adding review", error: error.message });
+        console.log(error)
+        res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 
@@ -19,7 +20,8 @@ const getReviewsByProduct = async (req, res) => {
         const reviews = await Review.find({ product: productId }).populate("user", "name").populate("replies.user", "name");
         res.status(200).json({ success: true, reviews });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error fetching reviews", error: error.message });
+        console.log(error)
+        res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 
@@ -40,7 +42,8 @@ const addReply = async (req, res) => {
         
         res.status(200).json({ success: true, message: "Reply added successfully", review });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error adding reply", error: error.message });
+        console.log(error)
+      res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 
@@ -50,7 +53,8 @@ const deleteReview = async (req, res) => {
         await Review.findByIdAndDelete(reviewId);
         res.status(200).json({ success: true, message: "Review deleted successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error deleting review", error: error.message });
+        console.log(error)
+        res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
     }
 };
 
