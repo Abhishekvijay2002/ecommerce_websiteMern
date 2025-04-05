@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const authUser = (req, res, next) => {
+const authAdminOrSeller = (req, res, next) => {
   try {
-    const token = req.cookies.seller_token || req.cookies.user_token;
+    const token = req.cookies.seller_token || req.cookies.admin_token;
     
     if (!token) {
       return res.status(401).json({ msg: "JWT token not found" });
@@ -12,7 +12,7 @@ const authUser = (req, res, next) => {
     if (!verifiedToken) {
       return res.status(401).json({ msg: "Token verification failed" });
     }
-    if (verifiedToken.role !== "seller" && verifiedToken.role !== "user") {
+    if (verifiedToken.role !== "seller" && verifiedToken.role !== "admin") {
       return res.status(403).json({ msg: "Access denied. Not authorized for this action." });
     }
     req.userId = { id: verifiedToken.id, role: verifiedToken.role };
@@ -22,7 +22,4 @@ const authUser = (req, res, next) => {
   }
 };
 
-module.exports = authUser;
-
-
-
+module.exports = authAdminOrSeller;

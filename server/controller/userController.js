@@ -49,10 +49,17 @@ const passwordMatch =await comparePassword(password,userExist.password)
 if(!passwordMatch){
    return res.status(400).json({error:"Invalid password"})
    }
-   const token = createToken(userExist.id)
-   res.cookie("token",token)
-   res.status(200).json({message : "userlogin suceesful", user:userExist})
-
+   let token;
+   if (userExist.role === "seller") {
+      token = createToken(userExist.id);
+      res.cookie("seller_token", token); 
+      res.status(200).json({ message: "Seller login successful", seller: userExist });
+   } else {
+      token = createToken(userExist.id);
+      res.cookie("user_token", token); 
+      res.status(200).json({ message: "User login successful", user: userExist });
+   }
+   
    } catch (error) {
       console.log(error)
       res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
@@ -61,7 +68,8 @@ if(!passwordMatch){
 }
 const Logout = async (req, res) => {
    try {
-      res.clearCookie("token");
+      res.clearCookie("user_token");
+      res.clearCookie("seller_token");
       res.status(200).json({ message: "User logout successful" });
    } catch (error) {
       console.log(error);
