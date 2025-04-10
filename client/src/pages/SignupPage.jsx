@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 const SignupPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -13,13 +12,6 @@ const SignupPage = () => {
     navigate("/login");
   };
   return (
-    <motion.div
-    className="min-h-screen flex items-center justify-center"
-    initial={{ opacity: 0, x: -100 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: 100 }}
-    transition={{ duration: 0.5 }}
-  >
     <div
       className={`min-h-screen ${
         isDarkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-800"
@@ -139,7 +131,6 @@ const SignupPage = () => {
         </div>
       </div>
     </div>
-    </motion.div>
   );
 };
 

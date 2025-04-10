@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const manageRouter = require('./routes/routerManger');
 const port = 3000;
+const cors = require("cors");
 app.use(express.json());
 const cookieparser = require('cookie-parser');
 const dotenv = require('dotenv').config()
@@ -12,6 +13,10 @@ mongoose.connect("mongodb+srv://abhishek8102tech:YV0QKYaeiHvDKCPP@cluster0.9aqpa
 }).catch((err) =>{
     console.log(err);
 })
+app.use(cors({
+    origin : 'http://localhost:5173',
+    credentials : true
+}))
 app.use(cookieparser())
 app.use("/api",manageRouter)
 
