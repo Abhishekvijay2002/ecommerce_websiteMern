@@ -1,12 +1,8 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// // const url = 'http://localhost:3000/api';
+const axiosInstance = axios.create({
+    baseURL:'http://localhost:3000/api',
+    withCredentials: true
+});
 
-// // console.log(url);
-
-// const axiosInstance = axios.create({
-//     baseURL:'http://localhost:3000/api',
-//     withCredentials: true
-// });
-
-// export { axiosInstance };
+export { axiosInstance };
