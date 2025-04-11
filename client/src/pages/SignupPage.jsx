@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userRegister } from "../services/UserService";
 
 const SignupPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [values, setvalues] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmpassword: '',
+  });
+  const onSubmit = (e) => {
+    userRegister(values).then((res) => {
+      console.log(res);
+      navigate("/login");
+      
+    }).catch((err) => {
+      console.log(err);
+
+  })
+    e.preventDefault(); 
+    console.log(values, 'values');
+  };
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -44,14 +63,14 @@ const SignupPage = () => {
           {/* Left Section: Signup Form */}
           <div className="flex flex-col justify-center">
             <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={onSubmit}>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium">
                   Name
                 </label>
                 <input
                   type="text"
-                  id="name"
+                  id="name" name="name"  onChange={(e) => setvalues({ ...values, [e.target.name]: e.target.value })}
                   className={`w-full p-2 border rounded-lg ${
                     isDarkMode
                       ? "bg-gray-600 text-white border-gray-500 focus:ring-blue-400 focus:border-blue-400"
@@ -65,7 +84,7 @@ const SignupPage = () => {
                 </label>
                 <input
                   type="email"
-                  id="email"
+                  id="email"  name="email" onChange={(e) => setvalues({ ...values, [e.target.name]: e.target.value })}
                   className={`w-full p-2 border rounded-lg ${
                     isDarkMode
                       ? "bg-gray-600 text-white border-gray-500 focus:ring-blue-400 focus:border-blue-400"
@@ -79,7 +98,7 @@ const SignupPage = () => {
                 </label>
                 <input
                   type="password"
-                  id="password"
+                  id="password" name="password"   onChange={(e) => setvalues({ ...values, [e.target.name]: e.target.value })}
                   className={`w-full p-2 border rounded-lg ${
                     isDarkMode
                       ? "bg-gray-600 text-white border-gray-500 focus:ring-blue-400 focus:border-blue-400"
@@ -92,8 +111,8 @@ const SignupPage = () => {
                   Confirm Password
                 </label>
                 <input
-                  type="password"
-                  id="confirmPassword"
+                  type="password" 
+                  id="confirmPassword" name="confirmpassword"  onChange={(e) => setvalues({ ...values, [e.target.name]: e.target.value })}
                   className={`w-full p-2 border rounded-lg ${
                     isDarkMode
                       ? "bg-gray-600 text-white border-gray-500 focus:ring-blue-400 focus:border-blue-400"
