@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { userLogout } from '../services/UserService';
+import { toast } from 'sonner';
 
 const Headersection = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   
+  
   const userToken = Cookies.get('user_token') || null;
   const sellerToken = Cookies.get('seller_token') || null;
   const userName = Cookies.get('user_name') || 'User';
 
   const handleLogout = () => {
-    Cookies.remove('user_token');
-    Cookies.remove('seller_token');
-    navigate('/');
+    try {
+      userLogout().then((res) => {
+        toast.success("logout successful!");
+        navigate('/');
+
+      })
+    } catch (error) {
+      console.log(error);
+      toast.error("logout failed!");
+
+    }
+   
   };
 
   return (
