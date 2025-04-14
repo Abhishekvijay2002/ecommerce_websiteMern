@@ -1,13 +1,11 @@
 import React from 'react'
 import Carousel from '../components/Carousel'
 import Card from '../components/Card'
-import FooterSections from '../components/Footer'
-import Headersection from '../components/Headersection'
+
 
 function CategoryPage() {
   return (
     <div>
-      <Headersection/>
       <Carousel/>
       <section>
     <h1 className="text-3xl font-bold mb-8 text-center mt-4">Featured Products / Best sellers </h1>
@@ -90,7 +88,6 @@ function CategoryPage() {
   </div>
 </div>
 </section>
-<FooterSections/>
     </div>
   )
 }

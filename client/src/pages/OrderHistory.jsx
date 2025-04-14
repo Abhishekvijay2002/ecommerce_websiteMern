@@ -1,6 +1,4 @@
 import React from 'react';
-import FooterSections from '../components/Footer';
-import Headersection from '../components/Headersection';
 
 const orders = [
   {
@@ -38,11 +36,10 @@ const statusColor = {
 const OrderHistory = () => {
   return (
     <div>
-        <Headersection/>
-    <div className="p-6">
+    <div className="p-6 h-115">
       <h2 className="text-2xl font-semibold mb-4">Order History</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 rounded-lg">
+        <table className="min-w-full border border-gray-300 rounded-lg ">
           <thead className="bg-gray-700 text-white">
             <tr>
               <th className="py-3 px-4 text-left">Order No</th>
@@ -70,7 +67,6 @@ const OrderHistory = () => {
         </table>
       </div>
     </div>
-    <FooterSections/>
     </div>
   );
 };

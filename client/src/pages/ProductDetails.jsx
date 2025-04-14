@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import FooterSections from "../components/Footer"; 
-import Headersection from "../components/Headersection";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
+import { useParams } from "react-router-dom";
+import { Getproductbyid } from "../services/UserService";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -17,6 +17,19 @@ const ProductDetails = () => {
       "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/watch-s10-digitalmat-gallery-4-202503?wid=728&hei=666&fmt=png-alpha&.v=1740102225921", 
       "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/watch-s10-digitalmat-gallery-5-202503?wid=728&hei=666&fmt=png-alpha&.v=1740102223675"];
 
+      const {productid} = useParams()
+      console.log(productid  , "productid getfrom params")
+     
+      const[product ,setProduct] =useState([]);
+
+    useEffect(() => {
+    Getproductbyid(productid).then((res) => {
+      setProduct(res.data);
+      console.log(res.data)
+    }).catch((err) => console.log(err)
+  )
+
+  },[productid])
   const handleAddReview = () => {
     if (newReview.name && newReview.rating && newReview.comment) {
       setReviews([...reviews, newReview]);
@@ -26,12 +39,11 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <Headersection/>
     <div className="p-6 max-w-6xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <img
-            src={images[selectedImage]}
+            src={product.images}
             alt="Selected"
             className="w-80 h-80 object-cover rounded"
           />
@@ -49,15 +61,15 @@ const ProductDetails = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-bold">Double Bed & Side Tables</h2>
+          <h2 className="text-xl font-bold">{product.title}</h2>
           <div className="flex items-center space-x-2">
-            <span className="text-lg font-semibold">$541.98</span>
+            <span className="text-lg font-semibold">{product.price}</span>
             <div className="flex text-yellow-500">
             </div>
             <span className="text-sm text-gray-500">32 reviews</span>
           </div>
           <p className="mt-4 text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates.
+           {product.description}
           </p>
           <ul className="list-disc list-inside mt-2 text-gray-600">
             <li>Lorem ipsum dolor sit amet</li>
@@ -149,8 +161,6 @@ const ProductDetails = () => {
       <Card/>
     </div>
     </div>
-
-    <FooterSections />
     </div>
   );
 };

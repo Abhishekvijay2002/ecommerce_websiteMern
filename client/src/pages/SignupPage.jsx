@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import { userRegister } from "../services/UserService";
+import { toast } from 'sonner';
 
 const SignupPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -11,11 +12,14 @@ const SignupPage = () => {
     confirmpassword: '',
   });
   const onSubmit = (e) => {
-    userRegister(values).then((res) => {
+   userRegister(values).then((res) => {
       console.log(res);
-      navigate("/login");
+      toast.success("signup successful!");
+
+      navigate("/");
       
     }).catch((err) => {
+      toast.error(err.response?.data?.error ||"signup failed!");
       console.log(err);
 
   })

@@ -7,8 +7,6 @@ import {
   FaStar,
   FaBox,
 } from "react-icons/fa";
-import FooterSections from "../components/Footer";
-import Headersection from "../components/Headersection";
 
 const menuItems = [
   { label: "Personal info", icon: <FaUser /> },
@@ -24,7 +22,6 @@ const ProfilePage = () => {
 
   return (
     <div>
-        <Headersection/>
     <div className="min-h-screen bg-gray-50 flex p-10 gap-10">
       {/* Sidebar */}
       <div className="w-64 bg-white rounded-xl shadow-md p-4">
@@ -53,7 +50,6 @@ const ProfilePage = () => {
         <div className="w-full max-w-xl h-96 border border-gray-300 rounded-md bg-white" />
       </div>
     </div>
-    <FooterSections/>
     </div>
   );
 };

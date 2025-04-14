@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { userLogin } from '../../services/UserService';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,11 +15,19 @@ const Login = () => {
 
     userLogin({ email, password })
         .then((res) => {
-            setMessage('Login successful!');
+            toast.success("login successful!");
+            
             console.log(res.data);
-            navigate('/');
+            if (res.data.admin?.role === 'admin') {
+              navigate('/admin/dashboard');
+          } else {
+              navigate('/');
+          }
+          
+            
         })
         .catch((err) => {
+          toast.error(err.response?.data?.error ||"login failed!");
             const errorMsg = err.response?.data?.error || 'Login failed!';
             setMessage(errorMsg);
         });
@@ -26,7 +35,7 @@ const Login = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Login</h2>
+     <h2>Login</h2>
       <form onSubmit={handleLogin} style={styles.form}>
         <input
           type="email"

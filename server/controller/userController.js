@@ -55,7 +55,12 @@ if(!passwordMatch){
       token = createToken(userExist.id);
       res.cookie("seller_token", token); 
       res.status(200).json({ message: "Seller login successful", seller: userExist });
-   } else {
+   } else if (userExist.role === "admin") {
+      token = createToken(userExist.id);
+      res.cookie("admin_token", token); 
+      res.status(200).json({ message: "Admin login successful", admin: userExist });
+   }
+   else {
       token = createToken(userExist.id);
       res.cookie("user_token", token); 
       res.status(200).json({ message: "User login successful", user: userExist });
@@ -71,7 +76,8 @@ const Logout = async (req, res) => {
    try {
       res.clearCookie("user_token");
       res.clearCookie("seller_token");
-      res.status(200).json({ message: "User logout successful" });
+      res.clearCookie("admin_token");
+      res.status(200).json({ message: " logout successful" });
    } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal Server Error" });

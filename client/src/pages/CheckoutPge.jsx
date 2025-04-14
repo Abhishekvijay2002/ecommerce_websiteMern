@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import FooterSections from "../components/Footer";
-import Headersection from "../components/Headersection";
 
 const CheckoutPage = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -22,7 +20,6 @@ const CheckoutPage = () => {
 
   return (
     <div>
-        <Headersection/>
     <div className="p-6 max-w-3xl mx-auto">
       {/* Delivery Address */}
       <div className="bg-gray-100 rounded-xl p-6 mb-6">
@@ -185,7 +182,6 @@ const CheckoutPage = () => {
         Proceed to Checkout
       </button>
     </div>
-    <FooterSections/>
     </div>
   );
 };

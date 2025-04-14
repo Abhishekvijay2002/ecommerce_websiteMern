@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { X, Minus, Plus } from "lucide-react";
-import Headersection from "../components/Headersection";
-import FooterSections from "../components/Footer";
 import Card from "../components/Card";
 
 const CartPage = () => {
@@ -35,7 +33,6 @@ const CartPage = () => {
 
   return (
     <div>
-        <Headersection/>
     <div className="p-6 max-w-6xl mx-auto">
       <div className="overflow-x-auto mb-10">
         <table className="w-full text-left border-separate border-spacing-y-4">
@@ -109,7 +106,6 @@ const CartPage = () => {
       <Card/>
     </div>
     </div>
-    <FooterSections/>
     </div>
   );
 };

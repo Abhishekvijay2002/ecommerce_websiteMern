@@ -6,7 +6,7 @@ const authAdmin = require('../middleware/authadmin');
 
 sellerrouter.post('/request',authUser,requestSeller);
 sellerrouter.get('/status', authUser, getSellerStatus);
-sellerrouter.delete('/request',authUser, cancelSellerRequest);
+sellerrouter.delete('/cancelrequest',authUser, cancelSellerRequest);
 
 sellerrouter.get('/requests', authAdmin,getAllSellerRequests);
 sellerrouter.get('/requests/:id',authAdmin, getSellerRequest);

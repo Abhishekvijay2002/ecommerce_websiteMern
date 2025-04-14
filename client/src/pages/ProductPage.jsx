@@ -1,12 +1,18 @@
-import React from 'react'
-import FooterSections from '../components/Footer'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
-import Headersection from '../components/Headersection'
+import { listProducts } from '../services/UserService'
 
 function ProductPage() {
+  const [products, setproducts] = useState([])
+    useEffect(() => {
+    listProducts().then((res) => {
+      setproducts(res.data);
+      console.log(res.data)
+    }).catch((err) => console.log(err)
+  )
+  })
   return (
     <div>
-      <Headersection/>
     <div className="flex p-4">
       {/* Sidebar */}
       <aside className="w-1/4 p-4 bg-gray-100 border border-gray-300 rounded">
@@ -53,18 +59,15 @@ function ProductPage() {
       <main className="w-3/4 p-4">
         <div className="text-gray-700 mb-4">Showing 1–12 of 24 item(s)</div>
         <div className="grid grid-cols-3 gap-4">
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
+
+            {products.length > 0 ? (
+        products.map((product ,i) => (
+          <Card key={i} product={product} />
+        ))
+      ) : (
+        <p>No courses available</p>
+      )}
+      
         </div>
         <div className="text-gray-700 mb-4 text-center mt-5">
     Showing 1–12 of 24 item(s)
@@ -80,8 +83,6 @@ function ProductPage() {
 
       </main>
     </div>
-
-      <FooterSections/>
     </div>
   )
 }

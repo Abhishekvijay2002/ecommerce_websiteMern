@@ -1,11 +1,8 @@
 import React from "react";
-import Headersection from "../components/Headersection";
-import FooterSections from "../components/Footer";
 
 const RequestPending = () => {
   return (
     <div>
-        <Headersection/>
     <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 text-center">
       <img src="/logo.png" alt="Logo" className="w-20 mb-6" />
       <h1 className="text-2xl font-semibold text-gray-800">Your Request being processing</h1>
@@ -24,7 +21,6 @@ const RequestPending = () => {
         Go home
       </a>
     </div>
-    <FooterSections/>
     </div>
   );
 };

@@ -1,12 +1,9 @@
 import React from 'react'
 import Card from '../components/Card'
-import FooterSections from '../components/Footer'
-import Headersection from '../components/Headersection'
 
 function HomePage() {
   return (
     <div>
-      <Headersection/>
     <section className="bg-gray-800 text-white py-16 px-8 text-center">
       <h1 className="text-5xl font-bold mb-6 ">
         Endless Choices, Limitless Savings!
@@ -220,7 +217,6 @@ function HomePage() {
   </div>
 </div>
 </section>
-<FooterSections/>
     </div>
   )
 }

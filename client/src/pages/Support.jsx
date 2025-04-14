@@ -1,7 +1,4 @@
 import React from "react";
-import FooterSections from "../components/Footer";
-import Headersection from "../components/Headersection";
-
 const supportData = [
   {
     title: "Orders & Shipping",
@@ -36,7 +33,6 @@ const supportData = [
 const SupportHelp = () => {
   return (
     <div>
-        <Headersection/>
     <div className="p-8 max-w-2xl mx-auto">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Support & Help</h2>
       <div className="space-y-6">
@@ -52,7 +48,6 @@ const SupportHelp = () => {
         ))}
       </div>
     </div>
-    <FooterSections/>
     </div>
   );
 };
