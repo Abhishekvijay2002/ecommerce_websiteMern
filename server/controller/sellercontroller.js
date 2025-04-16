@@ -53,7 +53,7 @@ const getSellerStatus = async (req, res) => {
 const cancelSellerRequest = async (req, res) => {
   try {
     // Extract the correct user ID
-    const userId = req.userId.id; // Accessing the 'id' property from the object
+    const userId = req.userId.id; 
     const user = await User.findById(userId);
 
     if (!user) {
@@ -152,6 +152,41 @@ const rejectSellerRequest = async (req, res) => {
     res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
   }
 };
+const removeSeller = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user.role !== "seller") {
+      return res.status(400).json({ message: "User is not a seller" });
+    }
+    user.role = null;
+    user.sellerApprovalStatus = null; 
+    await user.save();
+    return res.status(200).json({
+      message: "Seller removed successfully",
+      user,
+    });
+
+  } catch (error) {
+    console.log(error)
+    res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
+  }
+};
+
+const getAllSeller = async (req, res) => {
+try {
+  const users = await User.find({role : "seller"});
+  return res.status(200).json(users);
+}
+catch (error) {
+  console.log(error)
+  res.status(error.status || 500).json({error :error.message || "Intenal Server Error"})
+}
+};
 
 module.exports = {
   requestSeller,
@@ -161,4 +196,6 @@ module.exports = {
   getSellerRequest,
   approveSellerRequest,
   rejectSellerRequest,
+  removeSeller,
+  getAllSeller
 };

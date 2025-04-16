@@ -8,7 +8,6 @@ const RequestPending = () => {
       <h1 className="text-2xl font-semibold text-gray-800">Your Request being processing</h1>
       <p className="text-base text-gray-700 font-medium mt-1">we Will Contact you when it is ready</p>
 
-      {/* Image/Icon */}
       <img
         src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
         alt="Order Success"

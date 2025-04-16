@@ -11,7 +11,7 @@ export const userRegister = (data) => {
    return axiosInstance.post("/user/register", data);
 };
 export const userDetail = () => {
-   return axiosInstance.get("/user//getuser");
+   return axiosInstance.get("/user/getuser");
 };
 export const userUpdate = (data) => {
    return axiosInstance.put("/user/update", data);
@@ -19,12 +19,14 @@ export const userUpdate = (data) => {
 export const userDelete = () => {
    return axiosInstance.delete("/user/delete");
 }
+export const GetAllUsers = () => {
+   return axiosInstance.get("/user/allusers");
+};
 //product
 export const listProducts = () => {
    return axiosInstance.get("/product/getproducts");
 };
 export const Getproductbyid = (productid) => {
-   console.log("Calling API with productid:", productid);
    return axiosInstance.get(`/product/getdetail/${productid}`);
 };
 
@@ -37,4 +39,22 @@ export const GetSellerStatus = () => {
 };
 export const CancelSellerRequest = () => {
    return axiosInstance.delete("/seller/cancelrequest");
+};
+export const getAllsellerRequests = () => {
+   return axiosInstance.get("/seller/requests");
+};
+
+export const getsellerRequestById = (id) => {
+   return axiosInstance.get(`/seller/request/${id}`);
+};
+
+export const approveSellerRequest = (id) => {
+   return axiosInstance.put(`/seller/requests/approve/${id}`);
+};
+
+export const rejectSellerRequest = (id) => {
+   return axiosInstance.put(`/seller/requests/reject/${id}`);
+};
+export const getAllSellers = () => {
+   return axiosInstance.get("/seller/allsellers");
 };

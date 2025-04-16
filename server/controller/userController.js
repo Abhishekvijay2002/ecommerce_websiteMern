@@ -52,16 +52,16 @@ if(!passwordMatch){
    }
    let token;
    if (userExist.role === "seller") {
-      token = createToken(userExist.id);
+      token = createToken(userExist.id , userExist.role);
       res.cookie("seller_token", token); 
       res.status(200).json({ message: "Seller login successful", seller: userExist });
    } else if (userExist.role === "admin") {
-      token = createToken(userExist.id);
+      token = createToken(userExist .id, userExist.role);
       res.cookie("admin_token", token); 
       res.status(200).json({ message: "Admin login successful", admin: userExist });
    }
    else {
-      token = createToken(userExist.id);
+      token = createToken(userExist.id , userExist.role);
       res.cookie("user_token", token); 
       res.status(200).json({ message: "User login successful", user: userExist });
    }
@@ -86,13 +86,14 @@ const Logout = async (req, res) => {
 
 const getuser = async (req, res) => {
    try {
-       const user = await userModel.findById(req.userId).select("-password"); 
+      const user = req.userId.id;
+       const userExist = await userModel.findById(user).select("-password"); 
 
-       if (!user) {
+       if (!userExist) {
            return res.status(404).json({ message: "User not found" });
        }
 
-       res.json(user); 
+       res.json(userExist); 
    } catch (error) {
        console.error(error);
        res.status(500).json({ message: "Internal server error" });
@@ -101,7 +102,7 @@ const getuser = async (req, res) => {
 const updateuser = async (req, res) => {
    
    try {
-      const User = await userModel.findByIdAndUpdate(req.userId, req.body, { new: true });
+      const User = await userModel.findByIdAndUpdate(req.userId.id, req.body, { new: true });
       if (!User) {
          return res.status(404).json({ message: "User not found" });
      }
@@ -111,26 +112,45 @@ const updateuser = async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
   
    }
-}
+};
+
+
 const deleteUser = async (req, res) => {
+    try {
+        const user = req.userId.id; 
+        const Userexist = await userModel.findById(user);
+        if (!Userexist) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Delete the user
+        await userModel.findByIdAndDelete(user);
+
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const GetallUsers = async (req, res) => {
    try {
-       const { userId } = req.params
-
-       if (!mongoose.Types.ObjectId.isValid(userId)) {
-           return res.status(400).json({ error: "Invalid id" })
+      const users = await userModel.find().select("-password");
+      if (!users) {
+         return res.status(404).json({ message: "Users not found" });
        }
-
-       await userDb.findByIdAndDelete(userId)
-       return res.status(200).json("user deleted")
-   } catch (error) {
-       console.log(error);
-       res.status(error.status || 500).json({ error: error.message || "Internal server error" })
+         res.json(users);
+   }
+   catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
    }
 }
 
 
 
 
+
 module.exports = {
-    register ,login , Logout ,getuser ,updateuser ,deleteUser
+    register ,login , Logout ,getuser ,updateuser ,deleteUser ,GetallUsers
 }

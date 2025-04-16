@@ -1,7 +1,7 @@
 const express = require('express');
 const sellerrouter = express.Router();
 const authUser = require('../middleware/authuser');
-const { requestSeller, getSellerStatus, cancelSellerRequest, getSellerRequest, getAllSellerRequests, approveSellerRequest, rejectSellerRequest } = require('../controller/sellercontroller');
+const { requestSeller, getSellerStatus, cancelSellerRequest, getSellerRequest, getAllSellerRequests, approveSellerRequest, rejectSellerRequest, getAllSeller } = require('../controller/sellercontroller');
 const authAdmin = require('../middleware/authadmin');
 
 sellerrouter.post('/request',authUser,requestSeller);
@@ -10,7 +10,9 @@ sellerrouter.delete('/cancelrequest',authUser, cancelSellerRequest);
 
 sellerrouter.get('/requests', authAdmin,getAllSellerRequests);
 sellerrouter.get('/requests/:id',authAdmin, getSellerRequest);
-sellerrouter.put('/requests/:id/approve',authAdmin, approveSellerRequest);
-sellerrouter.put('/requests/:id/reject', authAdmin, rejectSellerRequest);
+sellerrouter.put('/requests/approve/:id',authAdmin, approveSellerRequest);
+sellerrouter.put('/requests/reject/:id', authAdmin, rejectSellerRequest);
+sellerrouter.delete('/remove/:id', authAdmin, rejectSellerRequest); 
+sellerrouter.get('/allsellers', authAdmin, getAllSeller);
 
 module.exports = sellerrouter;

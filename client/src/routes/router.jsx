@@ -18,6 +18,11 @@ import SignupPage from "../pages/SignupPage.jsx";
 import AdminLayout from "../layout/AdminLayout.jsx";
 import BecomeaSeller from "../pages/BecomeaSeller.jsx";
 import SellerLayout from "../layout/SellerLayout.jsx";
+import SellerRequest from "../pages/SellerRequest.jsx";
+import Allusers from "../pages/admin/allusers.jsx";
+import AllSellers from "../pages/admin/AllSellers.jsx";
+import Allproducts from "../pages/admin/Allproducts.jsx";
+import AddProduct from "../pages/admin/AddProduct.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +77,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: <ProfilePage/>,
       },
       {
         path: "/checkout",
@@ -96,6 +101,26 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <div><h1>hiii</h1></div>, // Removed the extra ">"
       },
+      {
+        path: "sellerrequestlist",
+        element: <SellerRequest/>,
+      },
+      {
+        path: "userlist",
+        element: <Allusers/>,
+      },
+      {
+        path: "sellerlist",
+        element: <AllSellers/>,
+      },
+      {
+        path: "productlist",
+        element: <Allproducts/>,
+      },
+      {
+        path: "addproduct",
+        element: <AddProduct/>,
+      }
 
     ]
   },

@@ -7,6 +7,7 @@ const authAdmin = (req ,res ,next) => {
             return res.status(401).json({msg : "jwt not founded" });
         }
         const verifyToken = jwt.verify(admin_token , process.env.JWT_SECRET);
+        console.log(verifyToken.role);
 
         if(!verifyToken) {
             return res.status(401).json({msg : "admin is not verified" });

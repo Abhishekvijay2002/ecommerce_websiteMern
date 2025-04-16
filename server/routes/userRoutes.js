@@ -1,4 +1,5 @@
-const { register, login, Logout, getuser, updateuser, deleteUser } = require('../controller/userController')
+const { register, login, Logout, getuser, updateuser, deleteUser, GetallUsers } = require('../controller/userController')
+const authAdmin = require('../middleware/authadmin')
 const authuser = require('../middleware/authuser')
 // const { verifyToken } = require('../../Utilities/verifyToken')
 
@@ -10,5 +11,6 @@ userRouter.post("/logout",Logout)
 userRouter.get("/getuser",authuser,getuser)
 userRouter.put("/update",authuser,updateuser)
 userRouter.delete("/delete",authuser,deleteUser)
+userRouter.get("/allusers",authAdmin,GetallUsers)
 
 module.exports = userRouter;
