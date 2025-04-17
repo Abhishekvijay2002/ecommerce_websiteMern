@@ -10,7 +10,7 @@ function ProductPage() {
       console.log(res.data)
     }).catch((err) => console.log(err)
   )
-  })
+  },[])
   return (
     <div>
     <div className="flex p-4">
@@ -65,7 +65,7 @@ function ProductPage() {
           <Card key={i} product={product} />
         ))
       ) : (
-        <p>No courses available</p>
+        <p>No products available</p>
       )}
       
         </div>

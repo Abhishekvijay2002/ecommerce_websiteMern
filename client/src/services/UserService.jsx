@@ -16,8 +16,8 @@ export const userDetail = () => {
 export const userUpdate = (data) => {
    return axiosInstance.put("/user/update", data);
 }
-export const userDelete = () => {
-   return axiosInstance.delete("/user/delete");
+export const userDelete = (id) => {
+   return axiosInstance.delete(`/user/delete/${id}`);
 }
 export const GetAllUsers = () => {
    return axiosInstance.get("/user/allusers");
@@ -28,6 +28,15 @@ export const listProducts = () => {
 };
 export const Getproductbyid = (productid) => {
    return axiosInstance.get(`/product/getdetail/${productid}`);
+};
+export const AddProduct = (data) => {
+   return axiosInstance.post("/product/create", data);
+};
+export const UpdateProductbyid = (productid, data) => {
+   return axiosInstance.put(`/product/update/${productid}`, data);
+};
+export const DeleteProduct = (productid) => {
+   return axiosInstance.delete(`/product/delete/${productid}`);
 };
 
 //seller
@@ -57,4 +66,50 @@ export const rejectSellerRequest = (id) => {
 };
 export const getAllSellers = () => {
    return axiosInstance.get("/seller/allsellers");
+};
+export const removeSeller = (id) => {
+   return axiosInstance.delete(`/seller/remove/${id}`);
+};
+// cart
+export const addToCart = (productid) => {
+   return axiosInstance.post(`/cart/addtocart/${productid}`);
+};
+export const getCart = () => {
+   return axiosInstance.get("/cart/getcart");
+};
+export const removeFromCart = (productid) => {
+   return axiosInstance.delete(`/cart/removecart/${productid}`);
+};
+// order
+export const addOrder = (data) => {
+   return axiosInstance.post("/order/add", data);
+};
+export const getOrders = () => {
+   return axiosInstance.get("/order/userorders");
+};
+export const cancelOrder = (orderid) => {
+   return axiosInstance.delete(`/order/cancel/${orderid}`);
+};
+export const updateOrder = (orderid, data) => {
+   return axiosInstance.patch(`/order/update/${orderid}`, data);
+};
+export const getAllOrders = () => {
+   return axiosInstance.get("/order/allorders");
+}
+
+//review
+export const addReview = (productId, data) => {
+   return axiosInstance.post(`/review/add/${productId}`, data);
+};
+export const getReviewsByProduct = (productId) => {
+   return axiosInstance.get(`/review/${productId}`);
+};
+export const addReply = (reviewId, data) => {
+   return axiosInstance.post(`/review/reply/${reviewId}`, data);
+};
+export const deleteReview = (reviewId) => {
+   return axiosInstance.delete(`/review/${reviewId}`);
+};
+export const getAllReviews = () => {
+   return axiosInstance.get("/review/allreviews");
 };

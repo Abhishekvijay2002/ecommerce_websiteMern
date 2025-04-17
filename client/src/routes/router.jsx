@@ -23,6 +23,7 @@ import Allusers from "../pages/admin/allusers.jsx";
 import AllSellers from "../pages/admin/AllSellers.jsx";
 import Allproducts from "../pages/admin/Allproducts.jsx";
 import AddProduct from "../pages/admin/AddProduct.jsx";
+import UpdateProduct from "../pages/admin/updateProduct.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -120,7 +121,11 @@ export const router = createBrowserRouter([
       {
         path: "addproduct",
         element: <AddProduct/>,
-      }
+      },
+      {
+        path: "updateproduct/:productid",
+        element: <UpdateProduct/>,
+      },
 
     ]
   },

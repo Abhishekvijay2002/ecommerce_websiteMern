@@ -119,7 +119,7 @@ const approveSellerRequest = async (req, res) => {
       return res.status(400).json({ message: "Seller request is not pending" });
     }
     user.sellerApprovalStatus = "approved";
-    user.role = "seller";
+    user.role = "seller"; // Change role to seller
     await user.save();
     return res.status(200).json({
       message: "Seller request approved successfully",
@@ -163,7 +163,7 @@ const removeSeller = async (req, res) => {
     if (user.role !== "seller") {
       return res.status(400).json({ message: "User is not a seller" });
     }
-    user.role = null;
+    user.role = "user"; // Change role back to user
     user.sellerApprovalStatus = null; 
     await user.save();
     return res.status(200).json({

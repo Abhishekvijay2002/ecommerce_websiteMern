@@ -3,7 +3,7 @@ const productModel = require("../models/productM0del");
 
 const addToCart = async (req, res) => {
     try {
-        const userid = req.userId;
+        const userid = req.userId.id;
         const productid = req.params.productid;
 
         console.log("User ID:", userid);
@@ -40,7 +40,7 @@ const addToCart = async (req, res) => {
 
 const getcart = async (req, res) => {
     try {
-        const userid = req.userId;
+        const userid = req.userId.id;
         const cart = await cartModel.findOne({ userid }).populate("product.productid")
         if (!cart) {
             return res.status(404).json({ error: "Cart not found" });
@@ -53,8 +53,8 @@ const getcart = async (req, res) => {
 }
 const removefromcart = async (req, res) => {
     try {
-        const userid = req.userId;
-        const productid = req.params.productid;
+        const userid = req.userId.id;
+        const {productid} = req.params;
         let cart = await cartModel.findOne({ userid });
         if (!cart) {
             return res.status(404).json({ error: "Cart not found" });
@@ -69,6 +69,7 @@ const removefromcart = async (req, res) => {
         res.status(error.status || 500).send({ message: error.message || "internal server error"})
     }
 }
+
 
 
 module.exports = {addToCart,getcart , removefromcart}

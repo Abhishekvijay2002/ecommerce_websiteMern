@@ -1,5 +1,6 @@
 const { register, login, Logout, getuser, updateuser, deleteUser, GetallUsers } = require('../controller/userController')
 const authAdmin = require('../middleware/authadmin')
+const authAdminOruser = require('../middleware/authAdminOruser')
 const authuser = require('../middleware/authuser')
 // const { verifyToken } = require('../../Utilities/verifyToken')
 
@@ -10,7 +11,7 @@ userRouter.post("/login",login)
 userRouter.post("/logout",Logout)
 userRouter.get("/getuser",authuser,getuser)
 userRouter.put("/update",authuser,updateuser)
-userRouter.delete("/delete",authuser,deleteUser)
+userRouter.delete("/delete/:id",authAdminOruser,deleteUser)
 userRouter.get("/allusers",authAdmin,GetallUsers)
 
 module.exports = userRouter;

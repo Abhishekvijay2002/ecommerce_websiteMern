@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { userLogout } from '../services/UserService';
 import { toast } from 'sonner';
+import { MdShoppingCart } from "react-icons/md";
 
 const Headersection = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -58,7 +59,7 @@ const Headersection = () => {
 
       {/* Right section - Cart / Login or Profile */}
       <div className="flex items-center gap-4">
-        <Link to="/cart" className="text-white" aria-label="Cart">🛒</Link>
+        <Link to="/cart" className="text-white" aria-label="Cart"><MdShoppingCart /></Link>
 
         {userToken ? (
           <div className="relative">

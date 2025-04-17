@@ -1,38 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X, Minus, Plus } from "lucide-react";
 import Card from "../components/Card";
+import { getCart, removeFromCart } from "../services/UserService";
+import { toast } from "sonner";
 
 const CartPage = () => {
-  const initialCart = [
-    { id: 1, name: "Double Bed & Dressing", price: 180, quantity: 1 },
-    { id: 2, name: "Double Bed & Dressing", price: 180, quantity: 1 },
-    { id: 3, name: "Double Bed & Dressing", price: 180, quantity: 1 },
-    { id: 4, name: "Double Bed & Dressing", price: 180, quantity: 1 },
-  ];
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const [cartItems, setCartItems] = useState(initialCart);
+  useEffect(() => {
+    getCart()
+      .then((res) => {
+        console.log("Cart response:", res.data);
+        const products = Array.isArray(res.data.cart?.product) ? res.data.cart.product : [];
+        setCartItems(products);
+        setTotalPrice(res.data.cart?.totalprice || 0);
+        toast.success("Cart fetched successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to fetch cart!");
+      });
+  }, []);
 
-  const handleQuantityChange = (id, amount) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-          : item
-      )
-    );
+  const handleRemove = (productid) => {
+    removeFromCart(productid).then(() => {
+        toast.success("Removed from cart successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to remove from cart!");
+      });
   };
-
-  const handleRemove = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   return (
-    <div>
     <div className="p-6 max-w-6xl mx-auto">
       <div className="overflow-x-auto mb-10">
         <table className="w-full text-left border-separate border-spacing-y-4">
@@ -45,29 +46,23 @@ const CartPage = () => {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((item) => (
-              <tr key={item.id} className="bg-gray-50 rounded-lg">
+            {cartItems?.map((item) => (
+              <tr key={item._id} className="bg-gray-50 rounded-lg">
                 <td className="flex items-center space-x-4 py-4">
-                  <button onClick={() => handleRemove(item.id)}>
+                  <button onClick={() => handleRemove(item.productid._id)} className="text-gray-600 hover:text-gray-800">
                     <X className="w-5 h-5 text-gray-600" />
                   </button>
-                  <div className="w-12 h-12 bg-gray-300 rounded"></div>
-                  <span>{item.name}</span>
+                  <img src={item.productid.image} alt={item.productid.title} className="w-12 h-12 rounded" />
+                  <span>{item.productid.title}</span>
                 </td>
                 <td>${item.price}</td>
                 <td>
                   <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => handleQuantityChange(item.id, -1)}
-                      className="px-2 py-1 border rounded"
-                    >
+                    <button className="px-2 py-1 border rounded">
                       <Minus className="w-4 h-4" />
                     </button>
                     <span>{item.quantity}</span>
-                    <button
-                      onClick={() => handleQuantityChange(item.id, 1)}
-                      className="px-2 py-1 border rounded"
-                    >
+                    <button className="px-2 py-1 border rounded">
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
@@ -83,7 +78,7 @@ const CartPage = () => {
         <h3 className="text-lg font-semibold mb-4 border-b pb-2">Cart Total</h3>
         <div className="flex justify-between py-2 border-b">
           <span>SUBTOTAL</span>
-          <span>${subtotal}</span>
+          <span>${totalPrice}</span>
         </div>
         <div className="flex justify-between py-2 border-b">
           <span>DISCOUNT</span>
@@ -91,21 +86,21 @@ const CartPage = () => {
         </div>
         <div className="flex justify-between py-2 font-semibold">
           <span>TOTAL</span>
-          <span>${subtotal}</span>
+          <span>${totalPrice}</span>
         </div>
         <button className="w-full mt-4 bg-black text-white py-2 rounded">
           Proceed To Checkout
         </button>
       </div>
+
       <h1 className="font-black mt-5">You may like this also</h1>
-    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 p-4'>
-      <Card/>
-      <Card/>
-      <Card/>
-      <Card/>
-      <Card/>
-    </div>
-    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   );
 };
